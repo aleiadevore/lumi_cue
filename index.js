@@ -1,6 +1,7 @@
 const Alexa = require('ask-sdk-core');
 const axios = require('axios');
 const moment = require('moment');
+const persistenceAdapter = require('ask-sdk-s3-persistence-adapter');
 
 // LIFX TOKENS
 //const lumiToken = 'cb98795431b49e680bbce1517d29527e46c1513563e1f6fadb375066f4b4b1e3';
@@ -516,6 +517,9 @@ function getApiEndpoint (locale) {
 }
 
 exports.handler = Alexa.SkillBuilders.custom()
+  .withPersistenceAdapter(
+    new persistenceAdapter.S3PersistenceAdapter({bucketName:process.env.S3_PERSISTENCE_BUCKET})
+  )
   .addRequestHandlers(
     LaunchRequestHandler,
     ConnectionsResponsetHandler,
