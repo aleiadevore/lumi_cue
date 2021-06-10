@@ -3,10 +3,24 @@
 Lumi Cue is an Alexa skill that combines visual and auditory cues for timers. Ask Alexa to tell Lumi Cue to set a timer. While it runs, your Lifx lights will create a soothing ambiance. At the end of your timer, the lights will revert back to your original settings.
 ## Download
 ## Setting up your token
-## Using Lumi Cue
-### Granting permissions
+## Using Lumi Cue for the first time
+To open Lumi Cue for the first time, tell Alexa "Open Lumi Cue."
+| ⚠️ WARNING: Make sure to read through all directions before your first interaction so that Lumi Cue can correctly obtain your Lifx Token. |
+| --- |
+
 ### Creating a Lifx Token
-### Creating a LifxToken List
+If you have a Lifx account already set up, follow [this link](https://cloud.lifx.com/settings) to the Lifx Cloud to generate a unique user token. Lumi Cue will use this token in order to toggle your personal Lifx lights.
+
+Once you have created your personal Lifx token, open the Alexa app on your phone, and do the following:
+1. Navigate to the icon on the bottom right of the screen labeled "More."
+2. Select "Lists and Notes."
+3. Create a new list named **EXACTLY** "LifxToken"
+4. Paste your personal Lifx token as the only item in the list.
+
+Lumi Cue will use this list each time you call the skill in order to access your personal token. **Do not delete this list after your first use.**
+
+### Granting permissions
+
 ## Authors
 * **Aleia DeVore**
 
