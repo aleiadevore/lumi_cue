@@ -5,6 +5,9 @@
   - [Using Lumi Cue for the first time](#using-lumi-cue-for-the-first-time)
     - [Creating a Lifx Token](#creating-a-lifx-token)
     - [Granting permissions](#granting-permissions)
+    - [Setting your first timer](#setting-your-first-timer)
+  - [Interacting with Lumi Cue](#interacting-with-lumi-cue)
+  - [Known issues](#known-issues)
   - [Authors](#authors)
   - [Acknowledgements](#acknowledgements)
 
@@ -35,6 +38,15 @@ She will respond by saying that Lumi Cue needs permission to access your timers 
 
 <img src="images/screenshots/permission_request.png" alt="Screenshot of permissions request" width="300px"/>
 
+### Setting your first timer
+Once you have put your Lifx token in the correct list and granted Lumi Cue permissions, you're ready to create your first timer.
+
+## Interacting with Lumi Cue
+
+## Known issues
+While we strived to create the best skill possible in the time given, there are some issues that we will update as we are able. These include:
+- Handling Lifx white lights
+- Saving tokens long-term
 
 ## Authors
 * **Aleia DeVore**
