@@ -23,8 +23,7 @@ Once you have created your personal Lifx token, open the Alexa app on your phone
 4. Paste your personal Lifx token as the only item in the list.
 
 
-<img src="images/screenshots/creating_list.png" alt="Screenshot of More page on Alexa app" style="width:300px;"/>
-<img src="images/screenshots/lifxtoken_list_view.png" alt="Screenshot of LifxToken list on Alexa app" style="width:300px;"/>
+<img src="images/screenshots/creating_list.png" alt="Screenshot of More page on Alexa app" width="300px"/>   <img src="images/screenshots/lifxtoken_list_view.png" alt="Screenshot of LifxToken list on Alexa app" width="300px"/>
 
 
 | ⚠️ NOTE: Lumi Cue will use this list each time you call the skill in order to access your personal token. **Do not delete this list after your first use.** |
@@ -34,7 +33,7 @@ Once you have created your personal Lifx token, open the Alexa app on your phone
 To open Lumi Cue for the first time, tell Alexa "Open Lumi Cue."
 She will respond by saying that Lumi Cue needs permission to access your timers and lists. To grant Lumi Cue permissions, open your Alexa app on your phone and click the card to grant permissions to Lumi Cue.
 
-<img src="images/screenshots/permission_request.png" alt="Screenshot of permissions request" style="width:300px;"/>
+<img src="images/screenshots/permission_request.png" alt="Screenshot of permissions request" width="300px"/>
 
 
 ## Authors
