@@ -1,12 +1,12 @@
 const Alexa = require('ask-sdk-core');
 const axios = require('axios');
 const moment = require('moment');
-const persistenceAdapter = require('ask-sdk-s3-persistence-adapter');
 
-const CarlosToken = process.env.CarlosToken;
+// Setting empty strings to set User token to
 let lifxListId = '';
 let LifxToken = '';
 
+// Timer Item object that communicates with Alexa API to set timer
 const timerItem = {
     duration: 'PT15S',
     timerLabel: 'demo',
@@ -28,6 +28,8 @@ const timerItem = {
         }
     }
 };
+
+// This it the object that is passed to Lifx RESTful API to set duration of light as well as colors
 const lifxItem = {
     color: 'blue',
     from_color: 'purple',
@@ -38,19 +40,29 @@ const lifxItem = {
     peak: 1
 };
 
+// Easter Egg that inults user if they invoke ToastModeIntent
+const ToastModeResponses = ['Silence, comb boy',
+    'I\'d rather manage memory in C than spend a day with you',
+    'You look like shell',
+    'You aren\'t worthy of the toast. You\'re more like a burnt tortilla',
+    'Calm down popcorn kernel. You\'re not quite popped yet',
+    'Finding reasons to like you is like finding the right semicolon in javascript',
+    'Are you Betty? Because you haunt my code to this day',
+    'What\'s wrong, did Betty hurt you?'
+];
+
+/* The launchRequestHandler handles the inital invocation when lumi cue is invoked.
+*  This also handles permissions set to allow the use of Timers API as well as the Alexa's list API
+*/
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
-        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest'
-        /* || (Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-                    && (Alexa.getIntentName(handlerInput.requestEnvelope) === 'TimerStartIntent')) */
-        ;
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest';
     },
     async handle(handlerInput) {
-        console.log('WE ARE IN LAUNCH INTENT' + JSON.stringify(handlerInput.requestEnvelope));
         const {
             permissions
         } = handlerInput.requestEnvelope.context.System.user;
-        const attributesManager = handlerInput.attributesManager;
+
         // Grab token from LifxToken user list and save as LifxToken
         const options = {
             headers: {
@@ -59,49 +71,29 @@ const LaunchRequestHandler = {
             }
         };
         if (!permissions) {
-            /* await handlerInput.responseBuilder
-                .speak('This skill needs permission to access your timers and lists.')
-                .addDirective({
-                  type: 'Connections.SendRequest',
-                  name: 'AskFor',
-                  payload: {
-                    '@type': 'AskForPermissionsConsentRequest',
-                    '@version': '1',
-                    permissionScope: 'read::alexa:household:list' 'alexa::alerts:timers:skill:readwrite'
-                  },
-                  token: ''
-                }); */
-            console.log('About to ask for permissions');
             const permissions = ['read::alexa:household:list', 'alexa::alerts:timers:skill:readwrite'];
             handlerInput.responseBuilder
                 .speak('This skill needs permission to access your timers and lists.')
                 .withAskForPermissionsConsentCard(permissions)
                 .getResponse();
-            console.log('permissions sent');
+
         } else {
             const apiEndpoint = 'https://api.amazonalexa.com/v2/householdlists/';
-            console.log('Inside else statment');
+
             await axios.get(apiEndpoint, options)
                 .then(response => {
-                    handlerInput.responseBuilder
-                        .speak('We grabbed your token!');
-                    console.log(response.data);
 
+                    let nameCheck = 0;
                     const ListResponse = response.data;
                     // Getting list of Alexa lists in dict form
                     const listLists = Object.values(ListResponse)[0];
-                    console.log(listLists);
-                    // Iterating through each list
-                    let nameCheck = 0;
 
                     for (let itr = 0; itr < listLists.length; itr++) {
-                        // console.log(listLists[itr]);
                         // Iterating through lists made of key, value pairs
                         for (let inneritr = 0; inneritr < Object.entries(listLists[itr]).length; inneritr++) {
                             // Checking name of ListResponse
                             if (Object.entries(listLists[itr])[inneritr][0] === 'name') {
                                 if (Object.entries(listLists[itr])[inneritr][1] === 'LifxToken') {
-                                    console.log(Object.entries(listLists[itr])[inneritr]);
                                     nameCheck = 1;
                                 }
                             }
@@ -112,48 +104,34 @@ const LaunchRequestHandler = {
                             for (let inneritr = 0; inneritr < Object.entries(listLists[itr]).length; inneritr++) {
                                 // Checking name of ListResponse
                                 if (Object.entries(listLists[itr])[inneritr][0] === 'listId') {
+                                    // Setting the corresponding list ID to help obtain list token
                                     lifxListId = Object.entries(listLists[itr])[inneritr][1];
-                                    console.log('Lifx list id is' + lifxListId);
-                                    console.log("made it this far");
                                 }
                             }
                         }
                     }
-                    console.log(lifxListId);
                 })
                 .catch(error => {
                     console.log(error);
                 });
-            // Getting list to get token
+            // Setting HTTPS URL for API Get request to grab the list object
             let listDest = 'https://api.amazonalexa.com/v2/householdlists/' + lifxListId + '/active';
+
             await axios.get(listDest, options)
                 .then(response => {
                     handlerInput.responseBuilder
-                    console.log(response['data']);
                     let listLists = Object.values(response['data']);
-                    console.log(listLists[0])
+                    // Looping through list of lists to get Token from object
                     for (let itr = 0; itr < listLists[0].length; itr++) {
-                        console.log('inside outer loop');
                         // Checking name of ListResponse
-                        console.log(Object.entries(listLists[0][itr]));
                         for (let inneritr = 0; inneritr < Object.entries(listLists[0][itr]).length; inneritr++) {
-                            console.log('inside inner loop');
                             if (Object.entries(listLists[0][itr])[inneritr][0] === 'value') {
-                                console.log(Object.entries(listLists[0][itr])[inneritr]);
                                 LifxToken = Object.entries(listLists[0][itr])[inneritr][1];
                             }
                         }
                     }
                 });
-            /*
-                    const lifxAttr = {
-                        "LifxToken": LifxToken
-                    };
-                    // setting peristent attributes
-                    attributesManager.setPersistentAttributes(lifxAttr);
-                    await attributesManager.savePersistentAttributes()
-            */
-            console.log('permissions sent');
+
             handlerInput.responseBuilder
                 .speak('Welcome to lumi cue! You can say set timer')
                 .reprompt('You can say set laundry timer');
@@ -162,7 +140,9 @@ const LaunchRequestHandler = {
             .getResponse();
     }
 };
-
+/* 
+* This handles the connections and the right permissions for the Alexa Skill
+*/
 const ConnectionsResponsetHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'Connections.Response';
@@ -171,24 +151,13 @@ const ConnectionsResponsetHandler = {
         const {
             permissions
         } = handlerInput.requestEnvelope.context.System.user;
-        console.log('WE ARE IN CONNECT INTENT' + JSON.stringify(handlerInput.requestEnvelope));
-        console.log(JSON.stringify(handlerInput.requestEnvelope));
-        console.log('request is ' + JSON.stringify(handlerInput.requestEnvelope.request));
-        console.log(handlerInput.requestEnvelope.request.payload.status);
+
         const status = handlerInput.requestEnvelope.request.payload.status;
         if (!permissions) {
-            return handlerInput.responseBuilder
-                .speak("I didn't hear your answer. This skill requires your permission.")
-                .addDirective({
-                    type: 'Connections.SendRequest',
-                    name: 'AskFor',
-                    payload: {
-                        '@type': 'AskForPermissionsConsentRequest',
-                        '@version': '1',
-                        permissionScope: ['read::alexa:household:list', 'alexa::alerts:timers:skill:readwrite']
-                    },
-                    token: 'user-id-could-go-here'
-                })
+            const permissions = ['read::alexa:household:list', 'alexa::alerts:timers:skill:readwrite'];
+            handlerInput.responseBuilder
+                .speak('This skill needs permission to access your timers and lists.')
+                .withAskForPermissionsConsentCard(permissions)
                 .getResponse();
         }
         switch (status) {
@@ -212,16 +181,15 @@ const ConnectionsResponsetHandler = {
             .getResponse();
     }
 };
-
+/* This function communicates with the Alexa Timers API as well as the Lifx API
+ * To set a timer that plays off a sound and has the lights on for the duration of the timer
+ */
 const TimerStartIntentHandler = {
     async canHandle(handlerInput) {
-        console.log('WE ARE IN START INTENT BEFORE ASYNC' + JSON.stringify(handlerInput.requestEnvelope));
         return handlerInput.requestEnvelope.request.type === 'IntentRequest' &&
             handlerInput.requestEnvelope.request.intent.name === 'TimerStartIntent';
     },
     async handle(handlerInput) {
-        console.log('WE ARE IN START INTENT' + JSON.stringify(handlerInput.requestEnvelope));
-
         // placing corresponding slots to timerItem object
         timerItem.timerLabel = handlerInput.requestEnvelope.request.intent.slots.name.value;
         timerItem.duration = handlerInput.requestEnvelope.request.intent.slots.timeObject.value;
@@ -230,9 +198,6 @@ const TimerStartIntentHandler = {
         const hours = (duration.hours() > 0) ? `${duration.hours()} ${(duration.hours() === 1) ? 'hour' : 'hours'},` : '';
         const minutes = (duration.minutes() > 0) ? `${duration.minutes()} ${(duration.minutes() === 1) ? 'minute' : 'minutes'} ` : '';
         const seconds = (duration.seconds() > 0) ? `${duration.seconds()} ${(duration.seconds() === 1) ? 'second' : 'seconds'}` : '';
-
-        console.log(seconds);
-        // converts duration to miliseconds
 
         // we need to check if hours, minutes, seconds exists first
         // const lightDuration = moment.duration(timerItem.duration);
@@ -244,16 +209,9 @@ const TimerStartIntentHandler = {
         if (duration.hours() > 0) {
             lightHours = duration.hours() * 3600;
         }
-        // const lightHours = (duration.hours() > 0) ? duration.hours * 3600 : 0;
-        // const lightMinutes = (duration.minutes() > 0) ? duration.hours * 60 : 0;
         const lightSeconds = duration.seconds();
 
-        // logs to check time computed correctly
-        console.log(`hours is ${lightHours} and is type ${typeof (lightHours)}`);
-        console.log(`minutes is ${lightMinutes} and is type ${typeof (lightMinutes)}`);
-        console.log(`seconds is ${lightSeconds} and is type ${typeof (lightSeconds)}`);
-
-        // convert units to miliseconds
+        // convert units to lightWaitTime by dividing lightWaitTime by ten to match number the cycles in pulse effect
         const lightWaitTime = (lightHours + lightMinutes + lightSeconds) / 10;
         lifxItem.cycles = lightWaitTime;
         console.log('wait time set to ' + lightWaitTime);
@@ -282,8 +240,7 @@ const TimerStartIntentHandler = {
                 'Content-Type': 'application/json'
             }
         };
-        console.log(LifxToken);
-        console.log(JSON.stringify(lifxItem));
+
         axios.post('https://api.lifx.com/v1/lights/all/effects/breathe', lifxItem, optionsLifx)
             .then(response => {
                 console.log(response);
@@ -291,13 +248,32 @@ const TimerStartIntentHandler = {
             .catch(error => {
                 console.log('Error is ' + JSON.stringify(error));
             });
-        console.log('Api request sent');
-        console.log('This is after set timeout');
         return handlerInput.responseBuilder
             .getResponse();
     }
 };
+/* This is The Toastbrush Easter Egg that roasts the user
+ */
+const ToastModeIntentHandler = {
+    canHandle(handlerInput) {
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest' &&
+            Alexa.getIntentName(handlerInput.requestEnvelope) === 'ToastModeIntent';
+    },
+    handle(handlerInput) {
+        const speakReprompt = 'Whats the matter you scared of getting burnt?';
+        const toastArr = ToastModeResponses;  
+        const toastIndex = Math.floor(Math.random() * toastArr.length);  
+        const randomRoast = toastArr[toastIndex];  
+        const speechOutput = 'Welcome, here is your roast ' + randomRoast;
 
+        return handlerInput.responseBuilder
+            .speak(speechOutput)
+            .reprompt(speakReprompt)
+            .getResponse();
+    }
+};
+/** This handler handles when the user asks alexa for help
+ */
 const HelpIntentHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest' &&
@@ -312,7 +288,8 @@ const HelpIntentHandler = {
             .getResponse();
     }
 };
-
+/** This intent is activated whenever the user use the cancle intent word
+ */
 const CancelAndStopIntentHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest' &&
@@ -347,21 +324,6 @@ const IntentReflectorHandler = {
             .speak(speakOutput)
             // .reprompt('add a reprompt if you want to keep the session open for the user to respond')
             .getResponse();
-    }
-};
-
-const LoadLifxTokenInterceptor = {
-    async process(handlerInput) {
-        const attributesManager = handlerInput.attributesManager;
-        const sessionAttributes = await attributesManager.getPersistentAttributes() || {};
-
-        const TokenBucket = sessionAttributes.hasOwnProperty('LifxToken')
-        console.log('Before TokenBucket check');
-        console.log(TokenBucket);
-        if (TokenBucket) {
-            attributesManager.setSessionAttributes(sessionAttributes);
-            console.log(TokenBucket);
-        }
     }
 };
 
@@ -436,23 +398,16 @@ function getApiEndpoint(locale) {
 }
 
 exports.handler = Alexa.SkillBuilders.custom()
-    .withPersistenceAdapter(
-        new persistenceAdapter.S3PersistenceAdapter({
-            bucketName: process.env.S3_PERSISTENCE_BUCKET
-        })
-    )
     .addRequestHandlers(
         LaunchRequestHandler,
         ConnectionsResponsetHandler,
         TimerStartIntentHandler,
-        /*    YesNoIntentHandler, */
+        ToastModeIntentHandler,
         HelpIntentHandler,
         CancelAndStopIntentHandler,
         SessionEndedRequestHandler,
-        IntentReflectorHandler)
-    .addRequestInterceptors(
-        LoadLifxTokenInterceptor
-    )
+        IntentReflectorHandler
+        )
     .addErrorHandlers(
         ErrorHandler
     )
