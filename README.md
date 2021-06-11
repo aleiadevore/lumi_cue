@@ -39,7 +39,25 @@ She will respond by saying that Lumi Cue needs permission to access your timers 
 <img src="images/screenshots/permission_request.png" alt="Screenshot of permissions request" width="300px"/>
 
 ### Setting your first timer
-Once you have put your Lifx token in the correct list and granted Lumi Cue permissions, you're ready to create your first timer.
+Once you have put your Lifx token in the correct list and granted Lumi Cue permissions, you're ready to create your first timer! After opening Lumi Cue, you can say "Set timer," and Alexa will prompt you for the name and length of the timer.
+>> "Set timer."
+
+>> "Set oven timer for thirty minutes."
+
+<img src="images/screenshots/invoke_then_set_1.PNG" alt="" width="300px"/>  <img src="images/screenshots/invoke_then_set_2.PNG" alt="" width="300px"/>
+
+After your first time opening Lumi Cue, you can call comands at the same time that you invoke the skill. For example, you may say,
+>>"Hey Alexa, tell Lumi Cue to set a laundry timer for twenty minutes."
+
+<img src="images/screenshots/invoke_and_set_timer.PNG" alt="" width="300px"/>
+
+At any point, you can exit Lumi Cue by saying an exit command.
+
+>> "Exit."
+
+>> "Never mind."
+
+<img src="images/screenshots/cancel_intent.png" alt="" width="300px"/>
 
 ## Interacting with Lumi Cue
 
