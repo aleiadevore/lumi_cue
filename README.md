@@ -57,7 +57,7 @@ At any point, you can exit Lumi Cue by saying an exit command.
 
 >> "Never mind."
 
-<img src="images/screenshots/cancel_intent.png" alt="" width="300px"/>
+<img src="images/screenshots/cancel_intent.PNG" alt="" width="300px"/>
 
 ## Interacting with Lumi Cue
 
