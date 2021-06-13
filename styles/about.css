@@ -1,12 +1,44 @@
 body {
     padding: 20px 20px 20px 20px;
-    background: rgb(130,37,130);
-    background: linear-gradient(90deg, rgba(130,37,130,1) 21%, rgba(1,41,96,1) 76%, rgba(20,196,237,1) 100%);
+    background-color: #822582;;
 }
 #intro {
     background-color: #822582;
-    padding: 20px 20px 20px 20px;
+    padding-left: 30px;
+    padding-right: 200px;
+    padding-top: 50px;
+    padding-bottom: 10px;
+}
+#bios {
+    padding-left: 30px;
+    padding-right: 200px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+}
+#aleia_bio {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items:center;
+}
+#carlos_bio {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items:center;
+}
+#bios #info{
+    background-color: #012960;
     border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    padding: 15px 15px 15px 15px;
+}
+#carlos_bio {
+    display: flex;
+    flex-direction: row;
 }
 #heading {
     display: flex;
@@ -20,11 +52,13 @@ body {
 h1 {
     font-size: 82pt;
     font-family: 'Josefin Sans', sans-serif;
-    color: white;
+    color: #FEC465;
     flex-grow: 2;
 }
 h2 {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Josefin Sans', sans-serif;
+    color: #FEC465;
+    font-size: 32pt;
 }
 #subheading {
     color: white;
@@ -34,6 +68,7 @@ h2 {
 }
 nav {
     margin: 0px 0px 16px 0px;
+    padding-top: 24px;;
     padding-left: 24px;
     padding-right: 24px;
     display: flex;
