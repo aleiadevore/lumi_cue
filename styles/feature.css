@@ -1,0 +1,52 @@
+body {
+    padding: 20% 20% 20% 20;
+    background-color: #012960;
+}
+#intro {
+    background-color: #012960;
+    padding-left: 30px;
+    padding-right: 200px;
+    padding-top: 50px;
+    padding-bottom: 10px;        
+}
+h1 {
+    font-size: 82pt;
+    font-family: 'Josefin Sans', sans-serif;
+    color: #FEC465;
+}
+h2 {
+    font-family: 'Josefin Sans', sans-serif;
+    color: #FEC465;
+    font-size: 32pt;
+}
+nav {
+    margin: 0px 0px 16px 0px;
+    padding-top: 24px;;
+    padding-left: 24px;
+    padding-right: 24px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-content: stretch;
+}
+nav a {
+    width: 100%;
+    padding: 30px 50px 30px 50px;
+    background-color: #04BF68;
+    color: #000000;
+    border-radius: 15px;
+    font-family: 'Roboto Condensed', sans-serif;
+    text-align: center;
+    flex-grow: 1;
+ }
+ p {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16pt;
+    color: #C4F4FF
+}
+#Video {
+    padding: 100px 50px 50px 150px;
+    align-self: center;
+
+}
