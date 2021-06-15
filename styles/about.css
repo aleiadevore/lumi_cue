@@ -49,7 +49,7 @@ body {
     align-items:center;
     width: inherit;
 }
-#bios #info{
+#bios #Aleia_info{
     background-color: #012960;
     border-radius: 15px;
     display: flex;
@@ -57,7 +57,22 @@ body {
     padding: 15px 15px 15px 15px;
     width: 66%;
 }
-#buttons {
+#bios #Carlos_info{
+    background-color: #012960;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    padding: 15px 15px 15px 15px;
+    width: 66%;
+}
+#Aleia_buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: inherit;
+    align-self: center;
+}
+#Carlos_buttons {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
