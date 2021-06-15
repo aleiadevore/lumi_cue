@@ -1,5 +1,5 @@
 body {
-    padding: 20% 20% 20% 20;
+    padding: 20px 20px 20px 20px;
     background-color: #012960;
 }
 #intro {
@@ -40,6 +40,9 @@ nav a {
     text-align: center;
     flex-grow: 1;
  }
+ nav a:hover {
+    background-color: #FEC465;
+}
  p {
     font-family: 'Roboto', sans-serif;
     font-size: 16pt;
@@ -49,4 +52,15 @@ nav a {
     padding: 100px 50px 50px 150px;
     align-self: center;
 
+}
+button {
+    font-size: large;
+    font-family: 'Roboto Condensed', sans-serif;
+    background-color: #FEC465;
+    border-radius: 15px;
+    border-color: #FEC465;
+    padding: 15px;
+}
+button:hover {
+    background-color: #04BF68;
 }

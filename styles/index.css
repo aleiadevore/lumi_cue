@@ -52,8 +52,22 @@ nav a {
     text-align: center;
     flex-grow: 1;
  }
+ nav a:hover {
+     background-color: #FEC465;
+ }
  p {
      font-family: 'Roboto', sans-serif;
      font-size: 18pt;
      color: #C4F4FF
+ }
+ button {
+     font-size: large;
+     font-family: 'Roboto Condensed', sans-serif;
+     background-color: #FEC465;
+     border-radius: 15px;
+     border-color: #FEC465;
+     padding: 15px;
+ }
+ button:hover {
+     background-color: #04BF68;
  }

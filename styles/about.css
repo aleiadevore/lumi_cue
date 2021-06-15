@@ -10,18 +10,30 @@ body {
     padding-bottom: 10px;
 }
 #bios {
-    padding-left: 30px;
-    padding-right: 200px;
-    padding-top: 10px;
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-top: 25px;
     padding-bottom: 10px;
     display: flex;
     flex-direction: column;
+}
+#bios h1{
+    color: #C4F4FF;
+    font-size: 60px;
+    text-align: star;
+}
+#bios img{
+    width: 357px;
+    height: 500px;
+    border-radius: 15px;
+    margin-right: 50px;
+    flex-grow: 1;
 }
 #aleia_bio {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    align-items:center;
+    align-items: center;
 }
 #carlos_bio {
     display: flex;
@@ -37,8 +49,14 @@ body {
     padding: 15px 15px 15px 15px;
 }
 #carlos_bio {
+    margin-top: 50px;
     display: flex;
     flex-direction: row;
+}
+#buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
 #heading {
     display: flex;
@@ -68,7 +86,7 @@ h2 {
 }
 nav {
     margin: 0px 0px 16px 0px;
-    padding-top: 24px;;
+    padding-top: 24px;
     padding-left: 24px;
     padding-right: 24px;
     display: flex;
@@ -87,8 +105,23 @@ nav a {
     text-align: center;
     flex-grow: 1;
  }
+ nav a:hover {
+    background-color: #FEC465;
+}
  p {
      font-family: 'Roboto', sans-serif;
      font-size: 16pt;
-     color: #C4F4FF
+     color: #ffffff;
  }
+ button {
+    font-size: large;
+    font-family: 'Roboto Condensed', sans-serif;
+    background-color: #FEC465;
+    border-radius: 15px;
+    border-color: #FEC465;
+    padding: 15px;
+    text-transform: uppercase;
+}
+button:hover {
+    background-color: #04BF68;
+}
