@@ -12,7 +12,7 @@
   - [Acknowledgements](#acknowledgements)
 
 Lumi Cue is an Alexa skill that combines visual and auditory cues for timers. Ask Alexa to tell Lumi Cue to set a timer. While it runs, your Lifx lights will create a soothing ambiance. At the end of your timer, the lights will revert back to your original settings.
-## Download
+## Usage
 - To use our application you will need an [Alexa Developer Console](https://developer.amazon.com/alexa/console/ask) account to be able to use the skill. 
 - Once you have an account, you will want to go to the [Lumi Cue Github Repository](https://github.com/aleiadevore/lumi_cue/tree/main) and fork the repo so that you can import the task from github.
 - After forking the repository, you can go back to the [Amazon Developer Console](https://developer.amazon.com/alexa/console/ask). From there you want to click on **create skill** to make an Alexa skill that you can import to.
