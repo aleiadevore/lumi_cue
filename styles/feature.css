@@ -64,6 +64,9 @@ li {
     align-self: center;
 
 }
+iframe {
+    border: 0px solid #012960;
+}
 button {
     font-size: large;
     font-family: 'Roboto Condensed', sans-serif;
