@@ -1,3 +1,13 @@
+/**
+ * This is the driving code for the Alexa skill. This is the portion that runs the code
+ * once a user has given Alexa a specific input.
+ * 
+ * First, it checks for correct permissions. If none are granted, it gives the user a card.
+ * It then searches the user's lists in order to obtain the token stored in the list LifxToken.
+ * If no error occurs, it creates a timer and changes the user's lights.
+ * 
+ * In the event of an error, it will log it to the CloudWatch log.
+ */
 const Alexa = require('ask-sdk-core');
 const axios = require('axios');
 const moment = require('moment');
@@ -200,7 +210,6 @@ const TimerStartIntentHandler = {
         const seconds = (duration.seconds() > 0) ? `${duration.seconds()} ${(duration.seconds() === 1) ? 'second' : 'seconds'}` : '';
 
         // we need to check if hours, minutes, seconds exists first
-        // const lightDuration = moment.duration(timerItem.duration);
         let lightMinutes = 0;
         if (duration.minutes() > 0) {
             lightMinutes = duration.minutes() * 60;
@@ -233,7 +242,7 @@ const TimerStartIntentHandler = {
             .catch(error => {
                 console.log(error);
             });
-        // waits length of duration and then calls toggle api
+        // Calls Lifx API to set light state
         const optionsLifx = {
             headers: {
                 Authorization: `Bearer ${LifxToken.toLowerCase()}`,
@@ -288,6 +297,7 @@ const HelpIntentHandler = {
             .getResponse();
     }
 };
+
 /** This intent is activated whenever the user use the cancle intent word
  */
 const CancelAndStopIntentHandler = {
@@ -304,6 +314,8 @@ const CancelAndStopIntentHandler = {
     }
 };
 
+/* This ends the session when a user says words like "exit" or "nevermind"
+*/
 const SessionEndedRequestHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'SessionEndedRequest';
@@ -313,6 +325,9 @@ const SessionEndedRequestHandler = {
         return handlerInput.responseBuilder.getResponse();
     }
 };
+
+/* Tells the user when they toggle a builtin Alexa intent that is not handled by our code
+*/
 const IntentReflectorHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest';
@@ -327,6 +342,8 @@ const IntentReflectorHandler = {
     }
 };
 
+/* Catches errors, tells the user that there was an error, and logs the error to CloudWatch
+*/
 const ErrorHandler = {
     canHandle() {
         return true;
@@ -342,6 +359,8 @@ const ErrorHandler = {
     }
 };
 
+/* Sets endpoints for Alexa API
+*/
 function getApiEndpoint(locale) {
     // North America – https://api.amazonalexa.com
     // Europe – https://api.eu.amazonalexa.com
@@ -397,6 +416,7 @@ function getApiEndpoint(locale) {
     return apiEndpoint;
 }
 
+/* Exports functions to be used by code */
 exports.handler = Alexa.SkillBuilders.custom()
     .addRequestHandlers(
         LaunchRequestHandler,
