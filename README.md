@@ -9,6 +9,8 @@
   - [Interacting with Lumi Cue](#interacting-with-lumi-cue)
   - [Known issues](#known-issues)
   - [Authors](#authors)
+    - [**Aleia DeVore**](#aleia-devore)
+    - [**Carlos Esquivel**](#carlos-esquivel)
   - [Acknowledgements](#acknowledgements)
 
 Lumi Cue is an Alexa skill that combines visual and auditory cues for timers. Ask Alexa to tell Lumi Cue to set a timer. While it runs, your Lifx lights will create a soothing ambiance. At the end of your timer, the lights will revert back to your original settings.
@@ -76,21 +78,29 @@ While we strived to create the best skill possible in the time given, there are 
 - Saving tokens long-term
 
 ## Authors
-* **Aleia DeVore**
+### **Aleia DeVore**
+Aleia DeVore came to Tulsa from North Carolina in 2016 as an AmeriCorps VISTA. After four years working with the Tulsa Regional STEM Alliance to encourage students to explore STEM fields, Aleia decided to pursue one herself.
 
-  * 📖 [Medium](https://aleiadevore.medium.com/a-meet-lumi-cue-te-10e32ab24b2)
+As a software engineering student, Aleia enjoys finding creative ways to solve problems and exploring ways to make tech inclusive and accessible.
 
-  * :robot: [GitHub](https://github.com/aleiadevore)
+* 📖 [Medium](https://aleiadevore.medium.com/a-meet-lumi-cue-te-10e32ab24b2)
+* :bird:[Twitter](https://twitter.com/aleiadevore)
 
-  * :briefcase: [LinkedIn](https://www.linkedin.com/in/aleiamcnaney/)
+* :robot: [GitHub](https://github.com/aleiadevore)
 
-* **Carlos Esquivel**
+* :briefcase: [LinkedIn](https://www.linkedin.com/in/aleiamcnaney/)
 
-  * 📖 [Medium](https://1831-9922.medium.com/)
+### **Carlos Esquivel**
+Carlos Esquivel is originally from Tulsa. After taking a gap year and working in sales, he decided to make a switch into the technology industry to obtain skills in software engineering. As the pandemic hit, Holberton school provided an opportunity to learn and grow in a remote working environment.
 
-  * :robot: [GitHub](https://github.com/CSant04y)
+As a software engineering student, Carlos enjoys the creative aspects of problem solving such as how collaboration can foster the transfer of knowledge.
 
-  * :briefcase: [LinkedIn](https://www.linkedin.com/in/carlos-esquivel-515768186/)
+* 📖 [Medium](https://1831-9922.medium.com/)
+* :bird:[Twitter](https://twitter.com/esquivelcarlo12)
+
+* :robot: [GitHub](https://github.com/CSant04y)
+
+* :briefcase: [LinkedIn](https://www.linkedin.com/in/carlos-esquivel-515768186/)
 ## Acknowledgements
 * [Dabble Lab Alexa Timer Skill](https://github.com/dabblelab/19-alexa-timers-example-skill)
 
