@@ -281,7 +281,9 @@ const ToastModeIntentHandler = {
     },
     handle(handlerInput) {
         const speakReprompt = 'Whats the matter you scared of getting burnt?';
-        const toastArr = ToastModeResponses;  
+        // Array of custom insults
+        const toastArr = ToastModeResponses;
+        // Generates random number to use as array index
         const toastIndex = Math.floor(Math.random() * toastArr.length);  
         const randomRoast = toastArr[toastIndex];  
         const speechOutput = 'Welcome, here is your roast ' + randomRoast;
