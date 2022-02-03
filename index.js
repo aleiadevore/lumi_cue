@@ -167,6 +167,7 @@ const ConnectionsResponsetHandler = {
         } = handlerInput.requestEnvelope.context.System.user;
 
         const status = handlerInput.requestEnvelope.request.payload.status;
+        // If no permissions granted, prompt user for permissions to read lists to and create and modify timers
         if (!permissions) {
             const permissions = ['read::alexa:household:list', 'alexa::alerts:timers:skill:readwrite'];
             handlerInput.responseBuilder
@@ -174,19 +175,25 @@ const ConnectionsResponsetHandler = {
                 .withAskForPermissionsConsentCard(permissions)
                 .getResponse();
         }
+        // Handle user's response to request for permissions
         switch (status) {
+            // If user grants permissions, prompt to set timer
             case 'ACCEPTED':
                 handlerInput.responseBuilder
                     .speak('Now that we have permission to set a timer. You can say set a timer.')
                     .reprompt('would you like to start a timer?');
                 break;
+            // If user denies permissions, can't proceed with app
             case 'DENIED':
                 handlerInput.responseBuilder
                     .speak("Without permissions, I can't set a timer. So I guess that's goodbye.");
                 break;
             case 'NOT_ANSWERED':
+            // If user does not respond, break
+            /* TO-DO: Should we reprompt here instead of just breaking? */
                 break;
             default:
+                // Default to permissions granted
                 handlerInput.responseBuilder
                     .speak('Now that we have permission to set a timer. You can say set a timer.')
                     .reprompt('would you like to start?');
