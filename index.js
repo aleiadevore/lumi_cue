@@ -80,6 +80,7 @@ const LaunchRequestHandler = {
                 'Content-Type': 'application/json'
             }
         };
+        // If permissions aren't granted to access lists, prompt user with card to enable permissions
         if (!permissions) {
             const permissions = ['read::alexa:household:list', 'alexa::alerts:timers:skill:readwrite'];
             handlerInput.responseBuilder
@@ -88,11 +89,12 @@ const LaunchRequestHandler = {
                 .getResponse();
 
         } else {
+            // Once permissions granted, access list and parse for Lifx token
             const apiEndpoint = 'https://api.amazonalexa.com/v2/householdlists/';
 
             await axios.get(apiEndpoint, options)
                 .then(response => {
-
+                    // nameCheck used as bool to see if name matches 'LifxToken'
                     let nameCheck = 0;
                     const ListResponse = response.data;
                     // Getting list of Alexa lists in dict form
@@ -121,12 +123,13 @@ const LaunchRequestHandler = {
                         }
                     }
                 })
+                // Catch errors
                 .catch(error => {
                     console.log(error);
                 });
             // Setting HTTPS URL for API Get request to grab the list object
             let listDest = 'https://api.amazonalexa.com/v2/householdlists/' + lifxListId + '/active';
-
+            // Once list found, search values of list for token
             await axios.get(listDest, options)
                 .then(response => {
                     handlerInput.responseBuilder
@@ -141,11 +144,12 @@ const LaunchRequestHandler = {
                         }
                     }
                 });
-
+            // Prompt user with first instructions
             handlerInput.responseBuilder
                 .speak('Welcome to lumi cue! You can say set timer')
                 .reprompt('You can say set laundry timer');
         }
+        // Handle user response
         return handlerInput.responseBuilder
             .getResponse();
     }
